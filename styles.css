@@ -1,0 +1,13 @@
+.main{
+  width:100%;
+  display: flex;
+}
+.main-view-container{
+  width: 50%;
+  height: 100vh;
+}
+.map {
+  width: 50%;
+  height: 100vh;
+  background-color: #ccc;
+}

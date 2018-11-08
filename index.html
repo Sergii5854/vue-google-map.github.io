@@ -4,26 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Map</title>
-
+    <link href="styles.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAU4CVf8FLD6nXeKM_lSBL_nnY8DobX6Qs"></script>
+
+
 </head>
 <body>
-<div class="app">
 
+<div id="app" class="main">
+    <template>
+    <vue-mainViewContainer class="main-view-container" ></vue-mainViewContainer>
+    </template>
+    <vue-map :locations="locations" v-model="map"></vue-map>
 </div>
-<script>
-    new Vue({
-        el: '.app',
-        data: {
 
-        },
-        computed: {
-
-        },
-        methods: {
-
-        }
-    });
+<script type="text/x-template" id="mainViewContainer">
+    <div class="main-view-container">
+    </div>
 </script>
+
+<script type="text/x-template" id="map">
+    <div class="map">
+    </div>
+</script>
+
+
+
+<script src="main.js"></script>
 </body>
 </html>
