@@ -90,23 +90,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
     })
 
-    Vue.component('vue-mainViewContainer', {
-        template: '#mainViewContainer',
-        props: {
+    let mc =  new Vue({
+        el: '#mainViewContainer',
+        data: {
 
-        },
-        data:  {
-            list: []
-        },
-        methods: {
-
-        },
-        watch: {
-
+            place: [],
+            locations: [],
+            map: null
         },
         created: async function() {
             this.locations = await getFakeLocation();
+        },
+        computed: {
+            modifiedPlace:async function () {
+                this.locations =  await getFakeLocation();
+            }
         }
+
     })
 
     let vm = new Vue({

@@ -14,20 +14,27 @@
 
 <div id="app" class="main">
     <template>
-    <vue-mainViewContainer class="main-view-container" >
-        <ul class="list-group">
-            <li class="list-group-item"
-                v-for="(item, index) in list">
-                {{ item }}
-            </li>
-        </ul>
-    </vue-mainViewContainer>
+
+        <vue-mainViewContainer class="main-view-container" v-model="mainViewContainer">
+            <div class='sidebar'>
+                <div v-for="place in locations">
+                    <img class="card-img-top" v-bind:src="place.image"
+                         alt="Card image cap">
+                    <div class="card-block">
+                        <p class="title"> {{place.title}} </p>
+                    </div>
+                </div>
+                <div class="bottom-buffer"></div>
+            </div>
+
+        </vue-mainViewContainer>
     </template>
     <vue-map :locations="locations" v-model="map"></vue-map>
 </div>
 
 <script type="text/x-template" id="mainViewContainer">
     <div class="main-view-container">
+
     </div>
 </script>
 
@@ -35,7 +42,6 @@
     <div class="map">
     </div>
 </script>
-
 
 
 <script src="main.js"></script>
