@@ -52,21 +52,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
                 this.markers.push(marker);
 
+
                 let infoWindow = new google.maps.InfoWindow();
-                infoWindow.setContent('<div class="map__info">' + pos.description + '</div>');
+                infoWindow.setContent('<div class="map__info"><img width="120" height="90" src=' + pos.image + '> <p>' + pos.title + '</p> </div>');
 
-                // Setup event for marker
-                google.maps.event.addListener(marker, 'mouseover', () => {
+                // // Events for marker
+                google.maps.event.addListener(marker, 'click', () => {
                     infoWindow.open(this.map, marker);
-                });
-
-                google.maps.event.addListener(marker, 'mouseout', () => {
-                    infoWindow.close(this.map, marker);
                 });
 
                 google.maps.event.addListener(marker, 'click', () => {
                     console.log("abc");
                 });
+
+
             },
             clearMarker() {
                 for (var i = 0; i < this.markers.length; i++) {
@@ -97,13 +96,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
         },
         data:  {
-            info:""
+            list: []
         },
         methods: {
 
         },
         watch: {
 
+        },
+        created: async function() {
+            this.locations = await getFakeLocation();
         }
     })
 
@@ -119,16 +121,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     });
 
-    // let containerVie = new Vue({
-    //     el: '#mainViewContainer',
-    //     data: {
-    //
-    //     },
-    //     methods: {
-    //
-    //     }
-    //
-    // });
 
     function getFakeLocation() {
         return new Promise((res, rej) => {

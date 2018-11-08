@@ -14,7 +14,14 @@
 
 <div id="app" class="main">
     <template>
-    <vue-mainViewContainer class="main-view-container" ></vue-mainViewContainer>
+    <vue-mainViewContainer class="main-view-container" >
+        <ul class="list-group">
+            <li class="list-group-item"
+                v-for="(item, index) in list">
+                {{ item }}
+            </li>
+        </ul>
+    </vue-mainViewContainer>
     </template>
     <vue-map :locations="locations" v-model="map"></vue-map>
 </div>
