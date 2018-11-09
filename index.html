@@ -6,7 +6,7 @@
     <title>Google Map</title>
     <link href="styles.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAU4CVf8FLD6nXeKM_lSBL_nnY8DobX6Qs"></script>
+
 
 
 </head>
@@ -29,7 +29,8 @@
 
         </vue-mainViewContainer>
     </template>
-    <vue-map :locations="locations" v-model="map"></vue-map>
+    <vue-map :locations="locations" class="map-container" v-model="map"></vue-map>
+
 </div>
 
 <script type="text/x-template" id="mainViewContainer">
@@ -44,6 +45,11 @@
 </script>
 
 
+
+
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAU4CVf8FLD6nXeKM_lSBL_nnY8DobX6Qs"></script>
 <script src="main.js"></script>
 </body>
 </html>

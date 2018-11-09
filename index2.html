@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Marker Clustering</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+
+</head>
+
+<body>
+<div id="app">
+    <map></map>
+</div>
+
+
+<script>
+    const data = [{
+        url: '#a',
+        title: 'Schulung #1',
+        status: 'Offen',
+        location: {
+            lat: 48.3653895,
+            lng: 10.8887703
+        }
+    }, {
+        url: '#b',
+        title: 'Schulung #2',
+        status: 'Vergeben',
+        location: {
+            lat: 48.3653895,
+            lng: 10.8897703
+        }
+    }, {
+        url: '#c',
+        title: 'Schulung #3',
+        status: 'Offen',
+        location: {
+            lat: 40.3653895,
+            lng: 12.8887703
+        }
+    }];
+
+    const imagesUrl = 'https://raw.githubusercontent.com/googlemaps/js-marker-clusterer/gh-pages/images';
+
+    const Map = Vue.extend({
+        template: '<div id="map" v-el:map></div>',
+
+        props: {
+            zoom: {
+                type: Number,
+                default: 7,
+                validator: function (value) {
+                    return value > 0
+                }
+            },
+            center: {
+                type: Object,
+                default: {
+                    lat: 51.133333333333,
+                    lng: 10.416666666667
+                },
+            }
+        },
+
+        data() {
+            return {
+                center: {
+                    lat: 48.3653895,
+                    lng: 10.8887703
+                },
+                map: null,
+                cluster: null,
+                markers: [],
+                infos: []
+            }
+        },
+
+        ready() {
+            this.start(data);
+        },
+
+        methods: {
+
+            start(data) {
+
+                this.map = new google.maps.Map(this.map, {
+                    zoom: this.zoom,
+                    center: this.center
+                });
+
+                data.forEach((item) => {
+                    let content = `<div id="content">
+						<div id="siteNotice">${item.status}</div>
+						<h1 id="firstHeading" class="firstHeading">${item.title}</h1>
+						<div id="bodyContent">
+							<p><a href="${item.url}">Zum Einsatz</a> </p>
+						</div>
+					</div>`;
+
+                    let info = new google.maps.InfoWindow({
+                        content: content,
+                        maxWidth: 300
+                    });
+
+                    let marker = new google.maps.Marker({
+                        position: item.location,
+                        //map: this.map,
+                        title: item.title
+                    });
+
+                    marker.addListener('click', () => {
+                        this.infos.forEach((i) => {
+                            i.close();
+                        });
+                        info.open(this.map, marker);
+                    });
+
+                    this.infos.push(info);
+                    this.markers.push(marker);
+
+                });
+
+                this.cluster = new MarkerClusterer(this.map, this.markers, {
+                    imagePath: imagesUrl + '/m'
+                });
+            }
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app',
+        components: {
+            Map
+        }
+    })
+</script>
+
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAU4CVf8FLD6nXeKM_lSBL_nnY8DobX6Qs"></script>
+<script src="main.js"></script>
+</body>
+</html>

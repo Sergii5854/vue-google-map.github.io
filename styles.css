@@ -11,3 +11,110 @@
   height: 100vh;
   background-color: #ccc;
 }
+
+
+.map-container{
+  padding:10px;
+  border: 1px solid #ccc;
+  background: #e1e1e1;
+}
+
+
+.wwone__map-infobox{
+  background: #fff;
+  width: 260px;
+  height: 340px;
+}
+
+.wwone__map-infobox__close {
+  position: absolute;
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-color: #cf043c;
+  color: #fff;
+  line-height: 30px;
+  text-align: center;
+  font-size: 20px;
+  right: 0;
+  top: 0;
+  z-index: 9999;
+}
+
+.wwone__map-infobox__close:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.wwone__map-infobox__thumb{
+  width: 100%;
+  height: auto;
+}
+
+.wwone__map-infobox__badge{
+  position: absolute;
+  display: block;
+  line-height: 25px;
+  color: #fff;
+  text-align: center;
+  left: 10px;
+  top: 10px;
+  z-index: 9999;
+  background: #666;
+  display: inline-block;
+  padding: 0px 10px;
+  margin-top: 5px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  font-size: 14px;
+}
+
+.wwone__map-infobox__inner{
+  background: #fff;
+  width: 220px;
+  position: relative;
+  font-size: 14px;
+  margin: 0;
+  background-color: #fff;
+  padding: 20px;
+}
+.wwone__map-infobox__inner:after{
+  content: ' ';
+  height: 0;
+  position: absolute;
+  width: 0;
+  border: 15px solid rgba(0, 0, 0, 0);
+  border-top-color: #fff;
+  left: 50%;
+  margin-left: -15px;
+  bottom: -30px;
+}
+.wwone__map-infobox__inner__heading{
+  color: #cf043c;
+  display: block;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.wwone__map-infobox__inner__info{
+  padding: 10px 0 20px 0;
+  font-size: 12px;
+}
+
+.wwone__map-infobox__inner__info strong{
+  width: 60px;
+  display: inline-block;
+}
+
+.wwone__map-infobox__inner__btn {
+  background-color: #c6163d;
+  padding: 8px 40px 9px 15px;
+  border-radius: 5px;
+  display: inline-block;
+  color: #FFF;
+  text-decoration: none;
+  background-image: url(http://www.1914.org/wp-content/themes/centenary/images/arrow-small.png);
+  background-repeat: no-repeat;
+  background-position: 94% 50%;
+}
