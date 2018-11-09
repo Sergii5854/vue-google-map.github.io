@@ -9,62 +9,251 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     return []
                 }
             },
-            option: {
-                type: Object,
-                default: {
-                    zoom: 18,
-                    center: {lat: 48.5, lng: 2.2},
-                }
-            }
         },
         data: function () {
             return {
                 cluster: null,
-                map: {},
+                map: null,
                 markers: [],
-                infos: []
-
+                infos: [],
+                option: {
+                    center: {lat: 48.5, lng: 2.2},
+                    zoom: 12,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    scrollwheel: false,
+                    disableDefaultUI: true,
+                    zoomControl: true,
+                    styles: [
+                        {
+                            "featureType": "water",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "color": "#d3d3d3"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit",
+                            "stylers": [
+                                {
+                                    "color": "#808080"
+                                },
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.highway",
+                            "elementType": "geometry.stroke",
+                            "stylers": [
+                                {
+                                    "visibility": "on"
+                                },
+                                {
+                                    "color": "#b3b3b3"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.highway",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "color": "#ffffff"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.local",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "visibility": "on"
+                                },
+                                {
+                                    "color": "#ffffff"
+                                },
+                                {
+                                    "weight": 1.8
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.local",
+                            "elementType": "geometry.stroke",
+                            "stylers": [
+                                {
+                                    "color": "#d7d7d7"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "visibility": "on"
+                                },
+                                {
+                                    "color": "#ebebeb"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#a7a7a7"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.arterial",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "color": "#ffffff"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.arterial",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "color": "#ffffff"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "landscape",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "visibility": "on"
+                                },
+                                {
+                                    "color": "#efefef"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#696969"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "visibility": "on"
+                                },
+                                {
+                                    "color": "#737373"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "labels.icon",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "labels",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.arterial",
+                            "elementType": "geometry.stroke",
+                            "stylers": [
+                                {
+                                    "color": "#d6d6d6"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road",
+                            "elementType": "labels.icon",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {},
+                        {
+                            "featureType": "poi",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "color": "#dadada"
+                                }
+                            ]
+                        }
+                    ]
+                }
             }
         },
-        ready() {
-            this.start(data);
-        },
         mounted: function () {
+
+
             let el = this.$el;
-            this.map = new google.maps.Map(el, this.option);
+            this.map = new google.maps.Map(el, this.option
+            );
 
 
             this.$emit('input', this.map);
 
             let bounds = new google.maps.LatLngBounds();
 
-            console.log(this.locations);
 
             for (let i = 0; i < this.locations.length; i++) {
                 let position = new google.maps.LatLng(this.locations[i].lat, this.locations[i].lng);
                 bounds.extend(position);
                 this.setMarker(this.locations[i]);
+
+                this.cluster = new MarkerClusterer(this.map, position, {
+                    imagePath: imagesUrl + '/m'
+                });
             }
-            this.cluster = new MarkerClusterer(this.map, this.markers, {
-                imagePath: 'https://raw.githubusercontent.com/googlemaps/js-marker-clusterer/gh-pages/images' + '/m'
-            });
+
+
             this.map.fitBounds(bounds);
+
 
         },
 
-        methods: {
 
+        methods: {
             // set marker
             setMarker(pos) {
                 let latlng = new google.maps.LatLng(pos.lat, pos.lng);
                 let marker = new google.maps.Marker({
                     position: latlng,
                     map: this.map,
-                    title: pos.title
+                    title: pos.title,
+                    icon: null,
                 });
                 let content = `<div id="content">
 						<h1 id="firstHeading" class="firstHeading">${pos.title}</h1>
-						<img width="120" height="90" src='${pos.image}'>
+						<img width="100%" height="auto" src='${pos.image}'>
 						<div id="bodyContent">
 							<p>${pos.description}</p>
 						</div>
@@ -73,13 +262,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                 let info = new google.maps.InfoWindow({
                     content: content,
-                    maxWidth: 300
+                    maxWidth: 180
                 });
 
 
                 this.infos.push(info);
                 this.markers.push(marker);
-
+                console.log(marker);
+                var markerCluster = new MarkerClusterer(this.map, this.markers, {
+                    imagePath: 'https://googlemaps.github.io/js-marker-clusterer/images/m'
+                });
                 // // Events for marker
                 marker.addListener('click', () => {
                     this.infos.forEach((i) => {
@@ -96,6 +288,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 }
                 this.marker = [];
             }
+
+
         },
         watch: {
             locations: function () {

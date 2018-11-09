@@ -13,22 +13,22 @@
 <body>
 
 <div id="app" class="main">
-    <template>
+    <!--<template>-->
 
-        <vue-mainViewContainer class="main-view-container" v-model="mainViewContainer">
-            <div class='sidebar'>
-                <div v-for="place in locations">
-                    <img class="card-img-top" v-bind:src="place.image"
-                         alt="Card image cap">
-                    <div class="card-block">
-                        <p class="title"> {{place.title}} </p>
-                    </div>
-                </div>
-                <div class="bottom-buffer"></div>
-            </div>
+        <!--<vue-mainViewContainer class="main-view-container" v-model="mainViewContainer">-->
+            <!--<div class='sidebar'>-->
+                <!--<div v-for="place in locations">-->
+                    <!--<img class="card-img-top" v-bind:src="place.image"-->
+                         <!--alt="Card image cap">-->
+                    <!--<div class="card-block">-->
+                        <!--<p class="title"> {{place.title}} </p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bottom-buffer"></div>-->
+            <!--</div>-->
 
-        </vue-mainViewContainer>
-    </template>
+        <!--</vue-mainViewContainer>-->
+    <!--</template>-->
     <vue-map :locations="locations" class="map-container" v-model="map"></vue-map>
 
 </div>
