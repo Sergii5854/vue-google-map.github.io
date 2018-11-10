@@ -234,34 +234,31 @@ document.addEventListener("DOMContentLoaded", function (event) {
         },
 
 
-
         methods: {
             // set marker
 
-                setMarker(pos)
-                {
-                    let latlng = new google.maps.LatLng(pos.lat, pos.lng);
+            setMarker(pos) {
+                let latlng = new google.maps.LatLng(pos.lat, pos.lng);
 
-                    let icon = {
-                        url: 'images/marker.svg', // url
-                        scaledSize: new google.maps.Size(50, 50), // scaled size
-                        origin: new google.maps.Point(0,0), // origin
-                        anchor: new google.maps.Point(0, 0) // anchor
-                    };
+                let icon = {
+                    url: 'images/marker.svg', // url
+                    scaledSize: new google.maps.Size(50, 50), // scaled size
+                    origin: new google.maps.Point(0, -4), // origin
+                    anchor: new google.maps.Point(0, 0) // anchor
+                };
 
-                    let marker = new google.maps.Marker({
-                        position: latlng,
-                        map: this.map,
-                        title: pos.title,
-                        label: `${pos.id}`,
-                        icon: icon,
-                        labelContent: "ABCD",
-                        labelAnchor: new google.maps.Point(15, 65),
-                        labelClass: "labels", // the CSS class for the label
-                        labelInBackground: false,
+                let marker = new google.maps.Marker({
+                    position: latlng,
+                    map: this.map,
+                    title: pos.title,
+                    label: `${pos.id}`,
+                    icon: icon,
+                    labelAnchor: new google.maps.Point(20, 65),
+                    labelClass: "labels", // the CSS class for the label
+                    labelInBackground: false,
 
-                    });
-                    let content = `<div id="content">
+                });
+                let content = `<div id="content">
 						<h1 id="firstHeading" class="firstHeading">${pos.title}</h1>
 						<img width="100%" height="auto" src='${pos.image}'>
 						<div id="bodyContent">
@@ -270,26 +267,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
 					</div>`;
 
 
-                    let info = new google.maps.InfoWindow({
-                        content: content,
-                        maxWidth: 180
+                let info = new google.maps.InfoWindow({
+                    content: content,
+                    maxWidth: 180
+                });
+
+
+                this.infos.push(info);
+                this.markers.push(marker);
+
+                // // Events for marker
+                marker.addListener('click', () => {
+                    this.infos.forEach((i) => {
+                        i.close();
                     });
-
-
-                    this.infos.push(info);
-                    this.markers.push(marker);
-
-                    // // Events for marker
-                    marker.addListener('click', () => {
-                        this.infos.forEach((i) => {
-                            i.close();
-                        });
-                        info.open(this.map, marker);
-                    });
-
-
-
-
+                    info.open(this.map, marker);
+                });
 
 
             },
@@ -318,10 +311,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                 ClusterIcon.prototype.createCss = function (pos) {
                     var size = 15;
-                    if (this.cluster_.getMarkers().length < 5) { size = 15; }
-                    if (this.cluster_.getMarkers().length > 5 && this.cluster_.getMarkers().length < 10) { size = 17; }
-                    if (this.cluster_.getMarkers().length > 10 && this.cluster_.getMarkers().length < 100) { size = 30; }
-                    if (this.cluster_.getMarkers().length > 100) { size = 37; }
+                    if (this.cluster_.getMarkers().length < 5) {
+                        size = 15;
+                    }
+                    if (this.cluster_.getMarkers().length > 5 && this.cluster_.getMarkers().length < 10) {
+                        size = 17;
+                    }
+                    if (this.cluster_.getMarkers().length > 10 && this.cluster_.getMarkers().length < 100) {
+                        size = 30;
+                    }
+                    if (this.cluster_.getMarkers().length > 100) {
+                        size = 37;
+                    }
 
                     style = ['border-radius : 50%',
                         'cursor        : pointer',
@@ -332,7 +333,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                         'height        : ' + size * 2 + 'px',
                         'line-height   : ' + (size * 2 + 1) + 'px',
                         'text-align    : center',
-                        'background-color: rgba(76, 76, 72, 0.9)',
+                        'background-color: rgba(0, 147, 176, 0.8)', // cluster background
                         'color: #ffffff',
                         'font-size:14px'
                     ];
@@ -342,13 +343,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                 this.cluster = new MarkerClusterer(this.map, this.markers, {
                     averageCenter: true,
-                    styles:[{
+                    styles: [{
                         url: "http://pluspng.com/img-png/circle-png-orange-round-circle-paint-brush-design-element-709.png",
-                        width:27,
-                        height:27,
-                        fontFamily:"comic sans ms",
-                        textSize:15,
-                        textColor:"#2e2e2e",
+                        width: 27,
+                        height: 27,
+                        fontFamily: "comic sans ms",
+                        textSize: 15,
+                        textColor: "#2e2e2e",
 
                     }]
 
