@@ -310,11 +310,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
                 ClusterIcon.prototype.createCss = function (pos) {
+
                     var size = 15;
-                    if (this.cluster_.getMarkers().length < 5) {
+                    if (this.cluster_.getMarkers().length < 2) {
                         size = 15;
                     }
-                    if (this.cluster_.getMarkers().length > 5 && this.cluster_.getMarkers().length < 10) {
+                    if (this.cluster_.getMarkers().length > 2 && this.cluster_.getMarkers().length < 10) {
                         size = 17;
                     }
                     if (this.cluster_.getMarkers().length > 10 && this.cluster_.getMarkers().length < 100) {
@@ -343,6 +344,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                 this.cluster = new MarkerClusterer(this.map, this.markers, {
                     averageCenter: true,
+                    maxZoom: 16,
+                    zoomOnClick: false,
+                    minimumClusterSize: 1,
                     styles: [{
                         url: "http://pluspng.com/img-png/circle-png-orange-round-circle-paint-brush-design-element-709.png",
                         width: 27,
@@ -354,6 +358,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     }]
 
                 });
+                // google.maps.event.addListener( this.cluster, 'clusterclick', function(cluster){
+                //     this.map.setCenter(this.map.getCenter());
+                //     this.map.setZoom(this.map.getZoom()+1);
+                // });
 
 
                 this.map.fitBounds(bounds);
