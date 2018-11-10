@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 infos: [],
                 option: {
                     center: {lat: 48.5, lng: 2.2},
-                    zoom: 10,
+                    zoom: 18,
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
                     scrollwheel: false,
                     disableDefaultUI: true,
@@ -283,10 +283,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
 
 
-
-
         },
         watch: {
+
             locations: function () {
                 this.clearMarker();
                 let bounds = new google.maps.LatLngBounds();
@@ -297,9 +296,44 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     this.setMarker(this.locations[i]);
 
                 }
-                const imagesUrl = 'https://raw.githubusercontent.com/googlemaps/js-marker-clusterer/gh-pages/images';
+
+
+                ClusterIcon.prototype.createCss = function (pos) {
+                    var size = 15;
+                    if (this.cluster_.getMarkers().length < 5) { size = 15; }
+                    if (this.cluster_.getMarkers().length > 5 && this.cluster_.getMarkers().length < 10) { size = 17; }
+                    if (this.cluster_.getMarkers().length > 10 && this.cluster_.getMarkers().length < 100) { size = 30; }
+                    if (this.cluster_.getMarkers().length > 100) { size = 37; }
+
+                    style = ['border-radius : 50%',
+                        'cursor        : pointer',
+                        'position      : absolute',
+                        'top           : ' + pos.y + 'px',
+                        'left          : ' + pos.x + 'px',
+                        'width         : ' + size * 2 + 'px',
+                        'height        : ' + size * 2 + 'px',
+                        'line-height   : ' + (size * 2 + 1) + 'px',
+                        'text-align    : center',
+                        'background-color: rgba(76, 76, 72, 0.9)',
+                        'color: #ffffff',
+                        'font-size:14px'
+                    ];
+                    return style.join(";") + ';';
+                };
+
+
                 this.cluster = new MarkerClusterer(this.map, this.markers, {
-                    imagePath: imagesUrl + '/m'
+                    averageCenter: true,
+                    styles:[{
+                        url: "http://pluspng.com/img-png/circle-png-orange-round-circle-paint-brush-design-element-709.png",
+                        width:27,
+                        height:27,
+                        fontFamily:"comic sans ms",
+                        textSize:15,
+                        textColor:"#2e2e2e",
+
+                    }]
+
                 });
 
                 this.map.fitBounds(bounds);
