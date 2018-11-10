@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     Vue.component('vue-map', {
         template: '#map',
         props: {
+
             locations: {
                 type: Array,
                 default: function () {
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 infos: [],
                 option: {
                     center: {lat: 48.5, lng: 2.2},
-                    zoom: 12,
+                    zoom: 10,
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
                     scrollwheel: false,
                     disableDefaultUI: true,
@@ -212,12 +213,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         },
         mounted: function () {
-
-
             let el = this.$el;
-            this.map = new google.maps.Map(el, this.option
-            );
-
+            this.map = new google.maps.Map(el, this.option);
 
             this.$emit('input', this.map);
 
@@ -228,14 +225,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 let position = new google.maps.LatLng(this.locations[i].lat, this.locations[i].lng);
                 bounds.extend(position);
                 this.setMarker(this.locations[i]);
-
-
             }
 
-            var options = {
-                imagePath: 'images/m'
-            };
-            this.cluster = new MarkerClusterer(this.map, this.markers,options);
 
             this.map.fitBounds(bounds);
 
@@ -243,17 +234,20 @@ document.addEventListener("DOMContentLoaded", function (event) {
         },
 
 
+
         methods: {
             // set marker
-            setMarker(pos) {
-                let latlng = new google.maps.LatLng(pos.lat, pos.lng);
-                let marker = new google.maps.Marker({
-                    position: latlng,
-                    map: this.map,
-                    title: pos.title,
-                    icon: null,
-                });
-                let content = `<div id="content">
+
+                setMarker(pos)
+                {
+                    let latlng = new google.maps.LatLng(pos.lat, pos.lng);
+                    let marker = new google.maps.Marker({
+                        position: latlng,
+                        map: this.map,
+                        title: pos.title,
+                        icon: null,
+                    });
+                    let content = `<div id="content">
 						<h1 id="firstHeading" class="firstHeading">${pos.title}</h1>
 						<img width="100%" height="auto" src='${pos.image}'>
 						<div id="bodyContent">
@@ -262,22 +256,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
 					</div>`;
 
 
-                let info = new google.maps.InfoWindow({
-                    content: content,
-                    maxWidth: 180
-                });
-
-
-                this.infos.push(info);
-                this.markers.push(marker);
-
-                // // Events for marker
-                marker.addListener('click', () => {
-                    this.infos.forEach((i) => {
-                        i.close();
+                    let info = new google.maps.InfoWindow({
+                        content: content,
+                        maxWidth: 180
                     });
-                    info.open(this.map, marker);
-                });
+
+
+                    this.infos.push(info);
+                    this.markers.push(marker);
+
+                    // // Events for marker
+                    marker.addListener('click', () => {
+                        this.infos.forEach((i) => {
+                            i.close();
+                        });
+                        info.open(this.map, marker);
+                    });
 
 
             },
@@ -287,6 +281,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 }
                 this.marker = [];
             }
+
+
 
 
         },
@@ -301,7 +297,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     this.setMarker(this.locations[i]);
 
                 }
-
+                const imagesUrl = 'https://raw.githubusercontent.com/googlemaps/js-marker-clusterer/gh-pages/images';
+                this.cluster = new MarkerClusterer(this.map, this.markers, {
+                    imagePath: imagesUrl + '/m'
+                });
 
                 this.map.fitBounds(bounds);
             }

@@ -13,3 +13,6 @@ npm-debug.log*
 *.ntvs*
 *.njsproj
 *.sln
+node_modules
+
+dist
