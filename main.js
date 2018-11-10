@@ -241,11 +241,25 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 setMarker(pos)
                 {
                     let latlng = new google.maps.LatLng(pos.lat, pos.lng);
+
+                    let icon = {
+                        url: 'images/marker.svg', // url
+                        scaledSize: new google.maps.Size(50, 50), // scaled size
+                        origin: new google.maps.Point(0,0), // origin
+                        anchor: new google.maps.Point(0, 0) // anchor
+                    };
+
                     let marker = new google.maps.Marker({
                         position: latlng,
                         map: this.map,
                         title: pos.title,
-                        icon: null,
+                        label: `${pos.id}`,
+                        icon: icon,
+                        labelContent: "ABCD",
+                        labelAnchor: new google.maps.Point(15, 65),
+                        labelClass: "labels", // the CSS class for the label
+                        labelInBackground: false,
+
                     });
                     let content = `<div id="content">
 						<h1 id="firstHeading" class="firstHeading">${pos.title}</h1>
@@ -272,6 +286,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
                         });
                         info.open(this.map, marker);
                     });
+
+
+
+
 
 
             },
@@ -335,6 +353,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     }]
 
                 });
+
 
                 this.map.fitBounds(bounds);
             }
