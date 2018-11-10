@@ -229,11 +229,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 bounds.extend(position);
                 this.setMarker(this.locations[i]);
 
-                this.cluster = new MarkerClusterer(this.map, position, {
-                    imagePath: imagesUrl + '/m'
-                });
+
             }
 
+            var options = {
+                imagePath: 'images/m'
+            };
+            this.cluster = new MarkerClusterer(this.map, this.markers,options);
 
             this.map.fitBounds(bounds);
 
@@ -268,10 +270,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                 this.infos.push(info);
                 this.markers.push(marker);
-                console.log(marker);
-                var markerCluster = new MarkerClusterer(this.map, this.markers, {
-                    imagePath: 'https://googlemaps.github.io/js-marker-clusterer/images/m'
-                });
+
                 // // Events for marker
                 marker.addListener('click', () => {
                     this.infos.forEach((i) => {
