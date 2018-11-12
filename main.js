@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         },
         data: function () {
             return {
+
                 cluster: null,
                 map: null,
                 markers: [],
@@ -216,8 +217,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
             let el = this.$el;
             this.map = new google.maps.Map(el, this.option);
 
-            this.$emit('input', this.map);
-
             let bounds = new google.maps.LatLngBounds();
 
 
@@ -227,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 this.setMarker(this.locations[i]);
             }
 
-
+        
             this.map.fitBounds(bounds);
 
 
@@ -236,6 +235,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         methods: {
             // set marker
+            isOpen(){
+              console.log("ssss", this)
+            },
 
             setMarker(pos) {
                 let latlng = new google.maps.LatLng(pos.lat, pos.lng);
@@ -258,31 +260,56 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     labelInBackground: false,
 
                 });
-                let content = `<div id="content">
-						<h1 id="firstHeading" class="firstHeading">${pos.title}</h1>
-						<img width="100%" height="auto" src='${pos.image}'>
-						<div id="bodyContent">
-							<p>${pos.description}</p>
-						</div>
+                let content = `<div class="card-content">
+						
+						    <img v-on:click='isOpen = !isOpen' 
+						    class="card-save" src="images/icon__save.png" alt="like">
+                       
+			            
+						<img class="card-image" width="100%" height="auto" src='${pos.image}'>
+						    <div class="card-info">
+                                <p class="card-title">${pos.title}</p>
+                                <p class="card-sub-title">${pos.place}</p>
+                                <p  class="card-title">$${pos.price}</p>
+                                <p  class="card-sub-title">${pos.stats}</p>
+							</div>
+						
 					</div>`;
 
 
                 let info = new google.maps.InfoWindow({
+                    isSave: false,
+                    pixelOffset: new google.maps.Size(0, 62),
                     content: content,
-                    maxWidth: 180
+                    maxWidth: 220,
+                    buttons: {
+                        close: { visible: false }
+                    },
                 });
 
 
                 this.infos.push(info);
                 this.markers.push(marker);
 
+                this.map.addListener('click', () => {
+                    this.infos.forEach((i) => {
+                        i.close();
+                    });
+                })
+
                 // // Events for marker
                 marker.addListener('click', () => {
                     this.infos.forEach((i) => {
                         i.close();
                     });
+
                     info.open(this.map, marker);
                 });
+
+                info.addListener('click', () => {
+                    console.log(this.info);
+                })
+
 
 
             },
@@ -307,6 +334,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     this.setMarker(this.locations[i]);
 
                 }
+
 
 
                 ClusterIcon.prototype.createCss = function (pos) {
@@ -416,7 +444,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             "description": "French Revolution Landmark",
             "lat": 48.853354,
             "lng": 2.369491,
-            "image": "https://www.gpsmycity.com/img/gd_attr/5664.jpg"
+            "image": "https://www.gpsmycity.com/img/gd_attr/5664.jpg",
+            "place": "Paris",
+            "price": 1000,
+            "stats": "1 BD 1 BA  955 SF"
         },
         {
             "id": 2,
@@ -424,7 +455,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             "description": "French Revolution Landmark",
             "lat": 48.857573,
             "lng": 2.347030,
-            "image": "https://www.gpsmycity.com/img/gd_attr/6323.jpg"
+            "image": "https://www.gpsmycity.com/img/gd_attr/6323.jpg",
+            "place": "Paris",
+            "price": 1000,
+            "stats": "1 BD 1 BA  955 SF"
         },
         {
             "id": 3,
@@ -432,7 +466,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             "description": "French Revolution Landmark",
             "lat": 48.861111,
             "lng": 2.330556,
-            "image": "https://www.gpsmycity.com/img/gd_attr/6345.jpg"
+            "image": "https://www.gpsmycity.com/img/gd_attr/6345.jpg",
+            "place": "Paris",
+            "price": 1000,
+            "stats": "1 BD 1 BA  955 SF"
         },
         {
             "id": 4,
@@ -440,7 +477,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             "description": "French Revolution Landmark",
             "lat": 48.863721,
             "lng": 2.332081,
-            "image": "https://www.gpsmycity.com/img/gd_attr/6351.jpg"
+            "image": "https://www.gpsmycity.com/img/gd_attr/6351.jpg",
+            "place": "Paris",
+            "price": 1000,
+            "stats": "1 BD 1 BA  955 SF"
         },
         {
             "id": 5,
@@ -448,7 +488,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             "description": "French Revolution Landmark",
             "lat": 48.865633,
             "lng": 2.321236,
-            "image": "https://www.gpsmycity.com/img/gd_attr/6360.jpg"
+            "image": "https://www.gpsmycity.com/img/gd_attr/6360.jpg",
+            "place": "Paris",
+            "price": 1000,
+            "stats": "1 BD 1 BA  955 SF"
         },
         {
             "id": 6,
@@ -456,7 +499,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             "description": "French Revolution Landmark",
             "lat": 48.862017,
             "lng": 2.318682,
-            "image": "https://www.gpsmycity.com/img/gd_attr/6430.jpg"
+            "image": "https://www.gpsmycity.com/img/gd_attr/6430.jpg",
+            "place": "Paris",
+            "price": 1000,
+            "stats": "1 BD 1 BA  955 SF"
         },
         {
             "id": 7,
@@ -464,7 +510,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             "description": "French Revolution Landmark",
             "lat": 48.858419,
             "lng": 2.312933,
-            "image": "https://www.gpsmycity.com/img/gd_attr/6433.jpg"
+            "image": "https://www.gpsmycity.com/img/gd_attr/6433.jpg",
+            "place": "Paris",
+            "price": 1000,
+            "stats": "1 BD 1 BA  955 SF"
         },
         {
             "id": 8,
@@ -472,7 +521,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             "description": "Atlas Obscura",
             "lat": 48.8472,
             "lng": 2.3444,
-            "image": "https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzL2FhZjZhZjk3Yzg1MjViZDkzYV9JTUdfOTIxMC5KUEciXSxbInAiLCJjb252ZXJ0IiwiLXF1YWxpdHkgODEgLWF1dG8tb3JpZW50Il0sWyJwIiwidGh1bWIiLCIzNzJ4MjQ4IyJdXQ"
+            "image": "https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzL2FhZjZhZjk3Yzg1MjViZDkzYV9JTUdfOTIxMC5KUEciXSxbInAiLCJjb252ZXJ0IiwiLXF1YWxpdHkgODEgLWF1dG8tb3JpZW50Il0sWyJwIiwidGh1bWIiLCIzNzJ4MjQ4IyJdXQ",
+            "place": "Paris",
+            "price": 1000,
+            "stats": "1 BD 1 BA  955 SF"
         },
         {
             "id": 9,
@@ -480,7 +532,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             "description": "Atlas Obscura",
             "lat": 48.8594,
             "lng": 2.3910,
-            "image": "https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzL2Z3cTlyY25teHZlZWIxNzNlZTQ4ZGYzNzQwZTMwX0RTQzAwMDQ2LkpQRyJdLFsicCIsImNvbnZlcnQiLCItcXVhbGl0eSA4MSAtYXV0by1vcmllbnQiXSxbInAiLCJ0aHVtYiIsIjM3MngyNDgjIl1d/DSC00046.JPG"
+            "image": "https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzL2Z3cTlyY25teHZlZWIxNzNlZTQ4ZGYzNzQwZTMwX0RTQzAwMDQ2LkpQRyJdLFsicCIsImNvbnZlcnQiLCItcXVhbGl0eSA4MSAtYXV0by1vcmllbnQiXSxbInAiLCJ0aHVtYiIsIjM3MngyNDgjIl1d/DSC00046.JPG",
+            "place": "Paris",
+            "price": 1000,
+            "stats": "1 BD 1 BA  955 SF"
         },
         {
             "id": 10,
@@ -488,7 +543,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             "description": "Atlas Obscura",
             "lat": 48.8666,
             "lng": 2.3555,
-            "image": "https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzLzIzMDQyNjM0MDBfNGI2Y2QzMzYxZV9vLmpwZyJdLFsicCIsInRodW1iIiwiMTAwMHg2NjcrMjMrMTMiXSxbInAiLCJjb252ZXJ0IiwiLXF1YWxpdHkgODEgLWF1dG8tb3JpZW50Il0sWyJwIiwidGh1bWIiLCIzNzJ4MjQ4IyJdXQ/2304263400_4b6cd3361e_o.jpg"
+            "image": "https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzLzIzMDQyNjM0MDBfNGI2Y2QzMzYxZV9vLmpwZyJdLFsicCIsInRodW1iIiwiMTAwMHg2NjcrMjMrMTMiXSxbInAiLCJjb252ZXJ0IiwiLXF1YWxpdHkgODEgLWF1dG8tb3JpZW50Il0sWyJwIiwidGh1bWIiLCIzNzJ4MjQ4IyJdXQ/2304263400_4b6cd3361e_o.jpg",
+            "place": "Paris",
+            "price": 1000,
+            "stats": "1 BD 1 BA  955 SF"
         },
         {
             "id": 11,
@@ -504,7 +562,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             "description": "Atlas Obscura",
             "lat": 48.8331,
             "lng": 2.3889,
-            "image": "https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzLzY3ODZiYTFjNjI4MGM0OTIyYl9tdXNlZWRlc2FydHNmb3JhaW5zMTMuanBnIl0sWyJwIiwiY29udmVydCIsIi1xdWFsaXR5IDgxIC1hdXRvLW9yaWVudCJdLFsicCIsInRodW1iIiwiMzcyeDI0OCMiXV0"
+            "image": "https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzLzY3ODZiYTFjNjI4MGM0OTIyYl9tdXNlZWRlc2FydHNmb3JhaW5zMTMuanBnIl0sWyJwIiwiY29udmVydCIsIi1xdWFsaXR5IDgxIC1hdXRvLW9yaWVudCJdLFsicCIsInRodW1iIiwiMzcyeDI0OCMiXV0",
+            "place": "Paris",
+            "price": 1000,
+            "stats": "1 BD 1 BA  955 SF"
         },
         {
             "id": 13,
@@ -512,7 +573,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             "description": "Food & Drink",
             "lat": 48.871245,
             "lng": 2.362890,
-            "image": "http://www.travelproper.com/wp-content/uploads/2014/03/Inside-Du-Pain-et-Des-Idees.jpg"
+            "image": "http://www.travelproper.com/wp-content/uploads/2014/03/Inside-Du-Pain-et-Des-Idees.jpg",
+            "place": "Paris",
+            "price": 1000,
+            "stats": "1 BD 1 BA  955 SF"
         },
         {
             "id": 14,
@@ -520,7 +584,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             "description": "Food & Drink",
             "lat": 48.8692,
             "lng": 2.3321,
-            "image": "http://d2aw2z0fz689pv.cloudfront.net/cache/img/f76f02e67fb5c76467ca0f244e3af38d64603c43--920-520-crop.jpeg?q=1501790542"
+            "image": "http://d2aw2z0fz689pv.cloudfront.net/cache/img/f76f02e67fb5c76467ca0f244e3af38d64603c43--920-520-crop.jpeg?q=1501790542",
+            "place": "Paris",
+            "price": 1000,
+            "stats": "1 BD 1 BA  955 SF"
         }
     ]
 
