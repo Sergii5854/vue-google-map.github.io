@@ -275,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                 <p  class="card-title">$${pos.price}</p>
                                 <p  class="card-sub-title">${pos.stats}</p>
                                 <img 
-						    class="card-share" src="images/icon__share-link.png" alt="like">
+						    class="card-share" src="images/icon__share-link.png" alt="share">
 							</div>
 						
 					</div>`;
