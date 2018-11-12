@@ -6,10 +6,14 @@
   width: 50%;
   height: 100vh;
 }
-.gm-style-iw + div {display: none;}
+.gm-ui-hover-effect {
+  display: none;
+  visibility: hidden;
+}
 
 .card-content {
   display: -webkit-inline-box;
+  margin:10px 0 0 0;
   display: -ms-inline-flexbox;
   display: inline-flex;
   -webkit-box-orient: vertical;
@@ -24,8 +28,12 @@
 }
 .card-info{
   padding: 10px 10px 0;
+  text-align: left;
 }
+.gm-style-iw{
+  text-align: center;
 
+}
 
 .card-image{
   display: inline-block;

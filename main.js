@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 this.setMarker(this.locations[i]);
             }
 
-        
+
             this.map.fitBounds(bounds);
 
 
@@ -235,8 +235,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         methods: {
             // set marker
-            isOpen(){
-              console.log("ssss", this)
+            isOpen() {
+                console.log("ssss", this)
             },
 
             setMarker(pos) {
@@ -251,7 +251,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                 let marker = new google.maps.Marker({
                     position: latlng,
-                    animation:google.maps.Animation.DROP,
+                    animation: google.maps.Animation.DROP,
                     map: this.map,
                     title: pos.title,
                     label: `${pos.id}`,
@@ -282,29 +282,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
                 let info = new google.maps.InfoWindow({
-
-                    // pixelOffset: new google.maps.Size(0, 62),
-                    // content: content,
-                    // maxWidth: 220,
-
-
-
-                    content: content
-                    ,disableAutoPan: false
-                    ,maxWidth: 220
-                    ,pixelOffset: new google.maps.Size(0, 62)
-                    ,zIndex: null
-                    ,boxStyle: {
+                    content: content,
+                    disableAutoPan: true,
+                    maxWidth: 220,
+                    pixelOffset: new google.maps.Size(0, 62),
+                    zIndex: null,
+                    boxStyle: {
                         background: ""
-                        ,opacity: 1
-                        ,width: ""
-                    }
-                    ,closeBoxMargin: ""
-                    ,closeBoxURL: ""
-                    ,infoBoxClearance: new google.maps.Size(1, 1)
-                    ,isHidden: false
-                    ,pane: "floatPane"
-                    ,enableEventPropagation: false
+                        , opacity: 1
+                        , width: ""
+                    },
+                    closeBoxMargin: "2px",
+                    closeBoxURL: null,
+                    infoBoxClearance: new google.maps.Size(1, 1),
+                    isHidden: false,
+                    pane: "floatPane",
+                    enableEventPropagation: false,
 
                 });
 
@@ -332,7 +325,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 })
 
 
-
             },
             clearMarker() {
                 for (var i = 0; i < this.markers.length; i++) {
@@ -355,7 +347,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     this.setMarker(this.locations[i]);
 
                 }
-
 
 
                 ClusterIcon.prototype.createCss = function (pos) {
@@ -393,9 +384,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                 this.cluster = new MarkerClusterer(this.map, this.markers, {
                     averageCenter: true,
-                    maxZoom: 16,
+                    maxZoom: 18,
                     zoomOnClick: true,
-
                     minimumClusterSize: 1,
                     styles: [{
                         url: "http://pluspng.com/img-png/circle-png-orange-round-circle-paint-brush-design-element-709.png",
