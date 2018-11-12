@@ -394,7 +394,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 this.cluster = new MarkerClusterer(this.map, this.markers, {
                     averageCenter: true,
                     maxZoom: 16,
-                    zoomOnClick: false,
+                    zoomOnClick: true,
+
                     minimumClusterSize: 1,
                     styles: [{
                         url: "http://pluspng.com/img-png/circle-png-orange-round-circle-paint-brush-design-element-709.png",
