@@ -251,6 +251,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                 let marker = new google.maps.Marker({
                     position: latlng,
+                    animation:google.maps.Animation.DROP,
                     map: this.map,
                     title: pos.title,
                     label: `${pos.id}`,
@@ -260,9 +261,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     labelInBackground: false,
 
                 });
+
                 let content = `<div class="card-content">
 						
-						    <img v-on:click='isOpen = !isOpen' 
+						    <img 
 						    class="card-save" src="images/icon__save.png" alt="like">
                        
 			            
@@ -272,19 +274,38 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                 <p class="card-sub-title">${pos.place}</p>
                                 <p  class="card-title">$${pos.price}</p>
                                 <p  class="card-sub-title">${pos.stats}</p>
+                                <img 
+						    class="card-share" src="images/icon__share-link.png" alt="like">
 							</div>
 						
 					</div>`;
 
 
                 let info = new google.maps.InfoWindow({
-                    isSave: false,
-                    pixelOffset: new google.maps.Size(0, 62),
-                    content: content,
-                    maxWidth: 220,
-                    buttons: {
-                        close: { visible: false }
-                    },
+
+                    // pixelOffset: new google.maps.Size(0, 62),
+                    // content: content,
+                    // maxWidth: 220,
+
+
+
+                    content: content
+                    ,disableAutoPan: false
+                    ,maxWidth: 220
+                    ,pixelOffset: new google.maps.Size(0, 62)
+                    ,zIndex: null
+                    ,boxStyle: {
+                        background: ""
+                        ,opacity: 1
+                        ,width: ""
+                    }
+                    ,closeBoxMargin: ""
+                    ,closeBoxURL: ""
+                    ,infoBoxClearance: new google.maps.Size(1, 1)
+                    ,isHidden: false
+                    ,pane: "floatPane"
+                    ,enableEventPropagation: false
+
                 });
 
 
@@ -386,10 +407,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     }]
 
                 });
-                // google.maps.event.addListener( this.cluster, 'clusterclick', function(cluster){
-                //     this.map.setCenter(this.map.getCenter());
-                //     this.map.setZoom(this.map.getZoom()+1);
-                // });
 
 
                 this.map.fitBounds(bounds);
